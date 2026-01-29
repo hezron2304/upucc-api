@@ -9,9 +9,9 @@ class Database
     {
         if (self::$conn === null) {
             $host = $_ENV['DB_HOST'] ?? 'localhost';
-            $user = $_ENV['DB_USER'] ?? 'hezron';
-            $pass = $_ENV['DB_PASS'] ?? 'hezron';
-            $name = $_ENV['DB_NAME'] ?? 'hezron';
+            $user = $_ENV['DB_USER'] ?? '';
+            $pass = $_ENV['DB_PASS'] ?? '';
+            $name = $_ENV['DB_NAME'] ?? '';
 
             self::$conn = mysqli_connect($host, $user, $pass, $name);
 
