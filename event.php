@@ -1,10 +1,10 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\EventController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new EventController();
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {

@@ -1,10 +1,10 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\MateriController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new MateriController();
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
@@ -13,6 +13,12 @@ try {
             break;
         case 'POST':
             $controller->store();
+            break;
+        case 'PUT':
+            $controller->updateStatus();
+            break; // New Endpoint
+        case 'DELETE':
+            $controller->destroy();
             break;
         default:
             Response::json('error', 'Method not allowed', null, 405);

@@ -1,18 +1,18 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\FeedbackController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new FeedbackController(); // Voting uses FeedbackController
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
         case 'GET':
-            $controller->index();
+            $controller->indexVoting();
             break;
         case 'POST':
-            $controller->store();
+            $controller->vote();
             break;
         default:
             Response::json('error', 'Method not allowed', null, 405);

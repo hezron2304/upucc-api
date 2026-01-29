@@ -1,21 +1,17 @@
 <?php
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
+include 'config.php';
 
-$host = "localhost";
-$user = "hezron";
-$pass = "hezron";
-$dbname = "hezron";
+// Ambil data user dari token JWT
+$user_login = get_auth_user($conn);
 
-$conn = mysqli_connect($host, $user, $pass, $dbname);
-
-$headers = array_change_key_case(getallheaders(), CASE_LOWER);
-$token = $headers['authorization'] ?? ($_GET['Authorization'] ?? '');
-
-if ($token) {
-    mysqli_query($conn, "UPDATE anggota SET token = NULL WHERE token = '$token'");
-    echo json_encode(["status" => "success", "message" => "Logout berhasil"]);
-} else {
-    echo json_encode(["status" => "error", "message" => "Token tidak ditemukan"]);
+if ($user_login) {
+    // UPDATE: Ganti 'nama' menjadi 'username' agar sesuai database terbaru
+    write_log($conn, $user_login['id'], $user_login['username'], "Melakukan Logout / Keluar Aplikasi");
 }
+
+echo json_encode([
+    "status" => "success", 
+    "message" => "Berhasil logout. Silakan hapus token di sisi client/aplikasi."
+]);
+mysqli_close($conn);
 ?>

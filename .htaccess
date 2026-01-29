@@ -1,0 +1,21 @@
+# 1. MATIKAN INDEX FOLDER
+# Supaya orang tidak bisa melihat daftar nama file di folder api kamu
+Options -Indexes
+
+# 2. BLOKIR AKSES LANGSUNG KE FILE SENSITIF
+# Blokir akses ke file sensitif baik di Apache 2.2 maupun 2.4
+<FilesMatch "^(env_settings\.php|config\.php|\.htaccess|logs\.txt)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 3. PROTEKSI TERHADAP SERANGAN XSS & SNIFFING
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

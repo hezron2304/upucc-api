@@ -1,18 +1,21 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\InventoryController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new InventoryController(); // Peminjaman uses InventoryController
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
         case 'GET':
-            $controller->index();
+            $controller->indexTransactions();
             break;
         case 'POST':
-            $controller->store();
+            $controller->borrow();
+            break;
+        case 'PUT':
+            $controller->returnItem();
             break;
         default:
             Response::json('error', 'Method not allowed', null, 405);

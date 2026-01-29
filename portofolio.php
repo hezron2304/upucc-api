@@ -1,10 +1,10 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\PortofolioController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new PortofolioController();
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {

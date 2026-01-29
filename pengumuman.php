@@ -1,10 +1,10 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\PengumumanController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new PengumumanController();
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
@@ -13,6 +13,9 @@ try {
             break;
         case 'POST':
             $controller->store();
+            break;
+        case 'DELETE':
+            $controller->destroy();
             break;
         default:
             Response::json('error', 'Method not allowed', null, 405);

@@ -1,10 +1,10 @@
 <?php
 require 'config.php';
-use App\Controllers\KasController;
+use App\Controllers\ProfileController;
 use App\Core\Response;
 
 try {
-    $controller = new KasController();
+    $controller = new ProfileController();
     $method = $_SERVER['REQUEST_METHOD'];
 
     switch ($method) {
@@ -12,7 +12,7 @@ try {
             $controller->index();
             break;
         case 'POST':
-            $controller->store();
+            $controller->update();
             break;
         default:
             Response::json('error', 'Method not allowed', null, 405);
