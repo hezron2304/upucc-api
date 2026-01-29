@@ -46,13 +46,25 @@ function loadEnv()
     $path = __DIR__ . '/env_settings.php';
 
     if (!file_exists($path)) {
-        return; // Silent fail if file missing (e.g. in production using server ENV)
+        return; // Silent fail if file missing
     }
 
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0 || strpos($line, '=') === false)
+        $line = trim($line);
+
+        // Skip comments, empty lines, PHP tags, and security exits
+        if ($line === '' || strpos($line, '#') === 0)
             continue;
+        if (strpos($line, '<?php') !== false || strpos($line, '?>') !== false)
+            continue;
+        if (stripos($line, 'exit') !== false || stripos($line, 'die') !== false)
+            continue;
+
+        // Skip lines that don't look like key=value definitions
+        if (strpos($line, '=') === false)
+            continue;
+
         list($name, $value) = explode('=', $line, 2);
         $_ENV[trim($name)] = trim($value);
     }
